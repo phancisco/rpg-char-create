@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <style>
+        .images {
+            height: 300px;
+
+        }
+        .w_images {
+            height: 40px;
+        }
+    </style>
+    <title>RPG-CharCreator</title>
+</head>
+
+<body class="m-5">
+    <header>
+        <div class="alert alert-primary d-flex justify-content-center" role="alert">
+            <h1>RPG CHARACTER CREATOR</h1>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="{% url 'index' %}">
+                <button type="button" class="btn btn-warning me-1">
+                    IR A LA LISTA DE PERSONAJES
+                </button>
+            </a>
+            <div class="d-flex justify-content-end align-items-center">
+            <a href="{% url 'weapon_create' %}">
+                <button type="button" class="btn btn-success me-1">
+                    CREAR ARMA
+                </button>
+            </a>
+            <a href="{% url 'character_create' %}">
+                <button type="button" class="btn btn-success me-1">
+                    CREAR PERSONAJE
+                </button>
+            </a>
+        </div>
+        </div>
+    </header>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center align-items-center g-2">
+            {% for i in Weapons %}
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ i.weapon_image.url }}" class="img-fluid rounded-start images" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{i.name}}</h5>
+                                <p class="card-text"><strong>Daño:</strong> {{ i.damage }} <strong>Tipo de arma:</strong> {{ i.weapon_type }}
+                                    {% if i.weapon_type == "melee" %}
+                                        <strong>Fuerza requerida:</strong> {{ i.strength_needed }}
+                                    {% else %} 
+                                        <strong>Magia requerida:</strong> {{i.intelligence_needed}} 
+                                    {% endif %}</p>
+                                <p class="card-text"><strong>Descripcion:</strong><br>{{ i.description }}</p>
+                                <p class="card-text"><small class="d-flex justify-content-end"><a href="/characters/{{ i.id }}">Ver más información del personaje</a></small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+    <footer>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"></script>
+    </footer>
+</body>
+
+</html>
