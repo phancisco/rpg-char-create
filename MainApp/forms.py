@@ -8,7 +8,7 @@ class CharacterForm(forms.ModelForm):
             'name', 'age', 'breed', 'class_name', 'inventory', 'equipment',
             'backstory', 'appearance', 'personality', 'alignment',
             'level', 'experience', 'hp', 'mp', 'strength', 'intelligence',
-            'agility', 'luck', 'skills', 'weapon', 'character_image'
+            'agility', 'luck', 'skills', 'weapon', 'character_image', 'privacy'
         ]
         widgets = {
             'character_image': forms.ClearableFileInput(attrs={'multiple': False}),
@@ -40,7 +40,8 @@ class CharacterForm(forms.ModelForm):
             'agility': 'Agility',
             'luck': 'Luck',
             'skills': 'Skills',
-            'weapon': 'Weapon'
+            'weapon': 'Weapon',
+            'privacy': 'Privacy',
         }
         help_texts = {
             'character_image': 'Upload an image of your character.',
@@ -63,6 +64,8 @@ class CharacterForm(forms.ModelForm):
             'agility': 'Enter the agility attribute of your character.',
             'luck': 'Enter the luck attribute of your character.',
             'skills': 'List skills of your character.',
+            'privacy': 'Choose whether this character is public or private.',
+
         }
         error_messages = {
             'character_image': {
@@ -85,6 +88,9 @@ class CharacterForm(forms.ModelForm):
             },
             'luck': {
                 'invalid': "Enter a valid luck value.",
+            },
+            'privacy': {
+                'invalid_choice': 'Select a valid privacy option.',
             },
         }
 class WeaponForm(forms.ModelForm):

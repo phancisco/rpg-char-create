@@ -7,13 +7,23 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
-
+ 
 # Create your views here.
+
+def index_general(request):
+    Characters = Character.objects.filter(privacy='public')
+    context = {
+            'Characters': Characters,
+            'General': True,
+    }
+    return render(request, 'index.html', context)
+
 @login_required
-def index(request):
+def created_characters(request):
     Characters = Character.objects.filter(user=request.user).order_by('-created_at')
     context = {
         'Characters': Characters,
+        'General': False,
     }
     return render(request, 'index.html', context)
 
@@ -51,11 +61,20 @@ def weapon_create(request):
         form = WeaponForm()
     return render(request, 'weapon_creator.html', {'form': form})
 
-@login_required
 def weapon_list(request):
-    weapons = Weapon.objects.filter(user=request.user)
+    Weapons = Weapon.objects.filter(privacy='public')
     context = {
-        'Weapons': weapons
+        'Weapons': Weapons,
+        'General': True
+    }
+    return render(request, 'weapon_list.html', context)
+
+@login_required
+def weapon_user_list(request):
+    Weapons = Weapon.objects.filter(user=request.user)
+    context = {
+        'Weapons': Weapons,
+        'General': False
     }
     return render(request, 'weapon_list.html', context)
 

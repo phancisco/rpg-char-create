@@ -7,6 +7,12 @@ WEAPON_TYPE_CHOICES = [
     ('melee', 'Melee'),
     ('ranged', 'Ranged'),
 ]
+
+PRIVACY_CHOICES = [
+        ('private', 'Private'),
+        ('public', 'Public'),
+]
+
 class Weapon(models.Model):
     weapon_image = models.ImageField(upload_to='weapons/', null=True, blank=True)
     weapon_type = models.CharField(max_length=10, choices=WEAPON_TYPE_CHOICES, default='melee')
@@ -16,6 +22,7 @@ class Weapon(models.Model):
     damage = models.IntegerField()
     description = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    privacy = models.CharField(max_length=10, choices=PRIVACY_CHOICES, default='private')
 
     def __str__(self):
         return self.name
@@ -45,9 +52,10 @@ class Character(models.Model):
     luck = models.IntegerField()
     skills = models.TextField()
     weapon = models.ForeignKey(Weapon , on_delete=models.CASCADE, null=True, blank=True)
-
-
+    
+    
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    privacy = models.CharField(max_length=10, choices=PRIVACY_CHOICES, default='private')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

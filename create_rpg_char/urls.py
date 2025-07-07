@@ -23,13 +23,15 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', MainApp.views.index, name='index'),
+    path('', MainApp.views.index_general, name='index'),
+    path('characters/list', MainApp.views.created_characters, name='characters_created'), 
     path('characters/<int:character_id>/', MainApp.views.character_detail, name='character_detail'),
     path('character/create/', MainApp.views.character_create, name='character_create'),
     path('weapon/create/', MainApp.views.weapon_create, name='weapon_create'),
     path('weapons/', MainApp.views.weapon_list, name='weapon_list'),
+    path('weapons/list', MainApp.views.weapon_user_list, name='weapons_created'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='index'), name='logout'),
     path('register/', MainApp.views.register_view, name='register'),
     path('character/delete/<int:character_id>/', MainApp.views.delete_character, name='delete_character'),
 

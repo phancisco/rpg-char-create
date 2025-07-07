@@ -23,32 +23,62 @@
 <body class="m-5">
     <header>
         <div class="alert alert-primary d-flex justify-content-center" role="alert">
-            <h1>RPG CHARACTER CREATOR</h1>
+            <h1>
+              {% if General is True %}  
+                RPG CHARACTER CREATOR
+              {% else %}
+                CREATED CHARACTERS
+              {% endif %}
+            </h1>
         </div>
         <div class="d-flex justify-content-between align-items-center">
             <a href="{% url 'weapon_list' %}">
                 <button type="button" class="btn btn-warning me-1">
-                    IR A LA LISTA DE ARMAS
+                    GO TO THE WEAPON LIST
                 </button>
             </a>
             <div class="d-flex justify-content-end align-items-center">
-            <a href="{% url 'weapon_create' %}">
-                <button type="button" class="btn btn-success me-1">
-                    CREAR ARMA
-                </button>
-            </a>
-            <a href="{% url 'character_create' %}">
-                <button type="button" class="btn btn-success me-1">
-                    CREAR PERSONAJE
-                </button>
-            </a>
             {% if user.is_authenticated %}
+              <a href="{% url 'weapon_create' %}">
+                  <button type="button" class="btn btn-success me-1">
+                      CREATE A WEAPON
+                  </button>
+              </a>
+              <a href="{% url 'character_create' %}">
+                  <button type="button" class="btn btn-success me-1">
+                      CREATE A CHARACTER
+                  </button>
+              </a>
+            {% endif %}
+            {% if user.is_authenticated %}
+              {% if General is True %} 
+                <form method="post" action="{% url 'characters_created' %}" style="display:inline;">
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-warning me-1">Private Characters</button>
+              {% else %}
+                <form method="post" action="{% url 'index' %}" style="display:inline;">
+            {% csrf_token %}
+
+                <button type="submit" class="btn btn-primary me-1">All Characters</button>
+              {% endif %}
+                </form>    
+
                 <form method="post" action="{% url 'logout' %}" style="display:inline;">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Cerrar sesión</button>
+ 
+                <button type="submit" class="btn btn-danger me-1">Logout</button>
                 </form>
+                 
             {% else %}
-                <p class="text-end"><a href="{% url 'login' %}">Iniciar sesión</a> | <a href="{% url 'register' %}">Registrarse</a></p>
+                <form method='post' action= "{% url 'login' %}" style="display:inline">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-primary me-1">Login</button>
+                </form>
+                <form method='post' action= "{% url 'register' %}" style="display:inline">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-warning me-1">Register</button>
+                </form>
             {% endif %}
 
         </div>
@@ -72,32 +102,32 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ i.name }}</h5>
                     <p class="card-text">
-                        <strong>Edad:</strong> {{ i.age }} 
-                        <strong>Raza:</strong> {{ i.breed }} 
-                        <strong>Nivel:</strong> {{ i.level }}
+                        <strong>Age:</strong> {{ i.age }} 
+                        <strong>Breed:</strong> {{ i.breed }} 
+                        <strong>Level:</strong> {{ i.level }}
                     </p>
                     <p class="card-text">
-                        <strong>Arma equipada:</strong> 
+                        <strong>Equiped Weapon:</strong> 
                         {% if i.weapon %}
                             {{ i.weapon }}
                             {% if i.weapon.weapon_image %}
                                 <img src="{{ i.weapon.weapon_image.url }}" class="img-fluid rounded-start images w_images" alt="Imagen del arma">
                             {% endif %}
                         {% else %}
-                            Ninguna
+                            None
                         {% endif %}
                     </p>
-                    <p class="card-text"><strong>Historia:</strong><br>{{ i.backstory }}</p>
+                    <p class="card-text"><strong>Backstory:</strong><br>{{ i.backstory }}</p>
                     <p class="card-text">
                         <small class="d-flex justify-content-end">
-                            <a href="/characters/{{ i.id }}">Ver más información del personaje</a>
+                            <a href="/characters/{{ i.id }}">See more information about the character</a>
                         </small>
                     </p>
 
                     {% if user == i.user %}
                             <form method="post" action="{% url 'delete_character' i.id %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-sm btn-danger mt-2">Eliminar</button>
+                                <button type="submit" class="btn btn-sm btn-danger mt-2">Delete</button>
                             </form>
                         {% endif %}
                 </div>
