@@ -1,0 +1,9 @@
+# Ignorar entornos virtuales
+.venv/
+
+# Ignorar base de datos local de desarrollo
+db.sqlite3
+
+# Ignorar archivos de configuración sensibles
+.env
+

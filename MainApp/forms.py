@@ -97,7 +97,7 @@ class WeaponForm(forms.ModelForm):
     class Meta:
         model = Weapon
         fields = [
-            'name', 'strength_needed', 'intelligence_needed', 'damage', 'description', 'weapon_image', 'weapon_type'
+            'name', 'strength_needed', 'intelligence_needed', 'damage', 'description', 'weapon_image', 'weapon_type', 'privacy'
         ]
         widgets = {
             'description': forms.Textarea(attrs={'rows': 3}),
@@ -112,6 +112,7 @@ class WeaponForm(forms.ModelForm):
             'description': 'Description',
             'weapon_image': 'Weapon Image',
             'weapon_type': 'Weapon Type',
+            'privacy': 'Privacy',
         }
         help_texts = {
             'name': 'Enter the name of the weapon.',
@@ -121,6 +122,7 @@ class WeaponForm(forms.ModelForm):
             'description': 'Describe the weapon.',
             'weapon_image': 'Upload an image of the weapon.',
             'weapon_type': 'Select the type of weapon.',
+            'privacy': 'Choose whether this character is public or private.',
         }
         error_messages = {
             'name': {
@@ -140,5 +142,8 @@ class WeaponForm(forms.ModelForm):
             },
             'weapon_type': {
                 'invalid_choice': "Select a valid choice. %(value)s is not one of the available choices.",
+            },
+            'privacy': {
+                'invalid_choice': 'Select a valid privacy option.',
             },
         }
