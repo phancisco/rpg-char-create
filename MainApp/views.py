@@ -17,6 +17,7 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+@login_required
 def character_detail(request, character_id):
     character = Character.objects.get(id=character_id)
     context = {
